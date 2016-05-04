@@ -39,6 +39,10 @@ func main() {
 	router.GET("/start", start)
 	router.GET("/status", status)
 
+	router.StaticFile("./top.html", "./index.html")
+	router.StaticFile("./bundle.js", "./bundle.js")
+	router.StaticFile("./bundle.js.map", "./bundle.js.map")
+
 	port := os.Getenv("PORT")
 	if len(port) == 0 {
 		port = "8080"
