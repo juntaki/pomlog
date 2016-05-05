@@ -36,12 +36,11 @@ func main() {
 
 	router := gin.Default()
 
-	router.GET("/start", start)
-	router.GET("/status", status)
+	router.GET("/api/start", start)
+	router.GET("/api/status", status)
 
-	router.StaticFile("./top.html", "./index.html")
-	router.StaticFile("./bundle.js", "./bundle.js")
-	router.StaticFile("./bundle.js.map", "./bundle.js.map")
+	router.Static("/static", "./public/")
+	router.StaticFile("/", "./public/index.html")
 
 	port := os.Getenv("PORT")
 	if len(port) == 0 {

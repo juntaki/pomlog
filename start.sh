@@ -1,4 +1,4 @@
 #!/bin/bash
 
 webpack
-go run main.go
+gin --port 8080

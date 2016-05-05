@@ -1,0 +1,5 @@
+node_modules
+gin-bin
+
+*.db
+public/bundle.js*
