@@ -4,11 +4,15 @@ import (
 	"bytes"
 	"database/sql"
 	"encoding/json"
+	"fmt"
 	"net/http"
 	"os"
 	"time"
 
 	"github.com/gin-gonic/gin"
+	"github.com/markbates/goth"
+	"github.com/markbates/goth/gothic"
+	"github.com/markbates/goth/providers/twitter"
 	_ "github.com/mattn/go-sqlite3"
 	"gopkg.in/gorp.v1"
 )
@@ -23,6 +27,7 @@ type Work struct {
 var dbmap *(gorp.DbMap)
 
 func main() {
+	// setup database
 	db, err := sql.Open("sqlite3", "./work.db")
 	checkErr(err)
 	dbmap = &gorp.DbMap{Db: db, Dialect: gorp.SqliteDialect{}}
@@ -34,10 +39,19 @@ func main() {
 	err = dbmap.CreateTablesIfNotExists()
 	checkErr(err)
 
+	// oauth
+	goth.UseProviders(
+		twitter.NewAuthenticate(os.Getenv("TWITTER_KEY"), os.Getenv("TWITTER_SECRET"), "http://lab.juntaki.com/auth/callback?provider=twitter"),
+	)
+
+	// routing
 	router := gin.Default()
 
-	router.GET("/api/start", start)
-	router.GET("/api/status", status)
+	router.GET("/auth", gin.WrapF(gothic.BeginAuthHandler))
+	router.GET("/auth/callback", auth)
+
+	router.GET("/api/start", auth, start)
+	router.GET("/api/status", auth, status)
 
 	router.Static("/static", "./public/")
 	router.StaticFile("/", "./public/index.html")
@@ -48,6 +62,18 @@ func main() {
 		port = "8080"
 	}
 	router.Run(":" + port)
+}
+
+func auth(c *gin.Context) {
+	user, err := gothic.CompleteUserAuth(c.Writer, c.Request)
+	if err != nil {
+		fmt.Fprintln(c.Writer, err)
+		c.Redirect(302, "/auth")
+		return
+	}
+
+	fmt.Fprintln(c.Writer, user.Name)
+	c.Next()
 }
 
 func start(c *gin.Context) {
