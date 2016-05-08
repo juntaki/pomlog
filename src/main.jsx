@@ -1,20 +1,21 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Paper from 'material-ui/lib/paper';
+import RaisedButton from 'material-ui/lib/raised-button';
 
-const PaperExampleSimple = () => (
+const style = {
+    margin: 12,
+};
+
+const MainButton = () => (
     <div>
-        <Paper zDepth={1}/>
-        <Paper zDepth={2}/>
-        <Paper zDepth={3}/>
-        <Paper zDepth={4}/>
-        <Paper zDepth={5}/>
+        <RaisedButton label="Sign up" style={style} />
+        <RaisedButton label="Login" style={style} />
     </div>
 );
 
-export default PaperExampleSimple;
+export default MainButton;
 
 ReactDOM.render(
-    <PaperExampleSimple />,
-    document.getElementById('main')
+    <MainButton />,
+    document.getElementById('react-content')
 );

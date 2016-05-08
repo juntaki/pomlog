@@ -41,6 +41,7 @@ func main() {
 
 	router.Static("/static", "./public/")
 	router.StaticFile("/", "./public/index.html")
+	router.StaticFile("/counter", "./public/counter.html")
 
 	port := os.Getenv("PORT")
 	if len(port) == 0 {

@@ -1,0 +1,40 @@
+body {
+    margin: 0;
+}
+
+#main {
+    padding: 2em;
+}
+.tomatobg {
+    background-color: #ff6347;
+    background-image: url("./css/images/overlay.png"), url("https://farm8.staticflickr.com/7022/6651401121_3c2c1e6a25_b.jpg");
+    background-size: cover;
+    color: #fff;
+}
+
+#banner {
+    padding: 8em 0;
+    text-align: center;
+}
+
+#header h1 {
+    text-decoration: none;
+    font-size: 100%;
+    color: inherit;
+    height: inherit;
+    left: 1.25em;
+    line-height: inherit;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    top: 0;
+}
+
+#header {
+    height: 3.25em;
+    line-height: 3.25em;
+    left: 0;
+    top: 0;
+    width: 100%;
+}
+
