@@ -8,8 +8,11 @@ const style = {
 
 const MainButton = () => (
     <div>
-        <RaisedButton label="Sign up" style={style} />
-        <RaisedButton label="Login" style={style} />
+        <RaisedButton label="Login with twitter"
+                      style={style}
+                      linkButton
+                      href="/auth?provider=twitter"
+        />
     </div>
 );
 

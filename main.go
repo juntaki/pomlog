@@ -41,21 +41,24 @@ func main() {
 
 	// oauth
 	goth.UseProviders(
-		twitter.NewAuthenticate(os.Getenv("TWITTER_KEY"), os.Getenv("TWITTER_SECRET"), "http://lab.juntaki.com/auth/callback?provider=twitter"),
+		twitter.NewAuthenticate(os.Getenv("TWITTER_KEY"), os.Getenv("TWITTER_SECRET"), "http://lab.juntaki.com/api/counter?provider=twitter"),
 	)
 
 	// routing
 	router := gin.Default()
-
+	router.LoadHTMLGlob("./public/*.html")
 	router.GET("/auth", gin.WrapF(gothic.BeginAuthHandler))
 	router.GET("/auth/callback", auth)
 
-	router.GET("/api/start", auth, start)
-	router.GET("/api/status", auth, status)
+	authRouter := router.Group("/api")
+	authRouter.Use(auth)
+	authRouter.GET("/start", start)
+	authRouter.GET("/status", status)
+	authRouter.GET("/counter", counter)
 
 	router.Static("/static", "./public/")
 	router.StaticFile("/", "./public/index.html")
-	router.StaticFile("/counter", "./public/counter.html")
+	//router.StaticFile("/counter", "./public/counter.html")
 
 	port := os.Getenv("PORT")
 	if len(port) == 0 {
@@ -64,23 +67,26 @@ func main() {
 	router.Run(":" + port)
 }
 
+func counter(c *gin.Context) {
+	_, ex := c.Get("cred")
+	if !ex {
+		c.Abort()
+		return
+	}
+	c.HTML(http.StatusOK, "counter.html", nil)
+}
+
 func auth(c *gin.Context) {
 	user, err := gothic.CompleteUserAuth(c.Writer, c.Request)
 	if err != nil {
 		fmt.Fprintln(c.Writer, err)
-		c.Redirect(302, "/auth")
 		return
 	}
-
-	fmt.Fprintln(c.Writer, user.Name)
-	c.Next()
+	c.Set("cred", user)
 }
 
 func start(c *gin.Context) {
 	user := c.Query("user")
-	if user == "" {
-		user = "Anonymous user"
-	}
 	work := c.Query("work")
 	if work == "" {
 		c.String(http.StatusOK, "Hello %s, what do you want to start?", user)
@@ -93,10 +99,11 @@ func start(c *gin.Context) {
 }
 
 func status(c *gin.Context) {
-	user := c.Query("user")
-	if user == "" {
-		user = "Anonymous user"
+	cred, ex := c.Get("cred")
+	if !ex {
+		c.Abort()
 	}
+	user := cred.(goth.User).Name
 	list, err := dbmap.Select(Work{}, "select * from work where user = ?", user)
 	checkErr(err)
 

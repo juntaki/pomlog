@@ -1,5 +1,6 @@
 #!/bin/bash
 
+source ./api.key
 cp src/*.html public/
 cp src/*.css public/
 webpack
