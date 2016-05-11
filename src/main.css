@@ -7,7 +7,7 @@ body {
 }
 .tomatobg {
     background-color: #ff6347;
-    background-image: url("./css/images/overlay.png"), url("https://farm8.staticflickr.com/7022/6651401121_3c2c1e6a25_b.jpg");
+    background-image: url("https://farm8.staticflickr.com/7022/6651401121_3c2c1e6a25_b.jpg");
     background-size: cover;
     color: #fff;
 }
