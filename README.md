@@ -1,5 +1,5 @@
 # Productivity logger
-Time logger based on Pomodoro technique.
+Work time logger for more productivity
 
 ## Setup
 
