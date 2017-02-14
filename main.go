@@ -46,19 +46,17 @@ func main() {
 
 	// routing
 	router := gin.Default()
-	router.LoadHTMLGlob("./public/*.html")
+	router.LoadHTMLGlob("./dist/*.html")
 	router.GET("/auth", gin.WrapF(gothic.BeginAuthHandler))
 	router.GET("/auth/callback", auth)
 
 	authRouter := router.Group("/api")
-	authRouter.Use(auth)
 	authRouter.GET("/start", start)
 	authRouter.GET("/status", status)
 	authRouter.GET("/counter", counter)
 
-	router.Static("/static", "./public/")
-	router.StaticFile("/", "./public/index.html")
-	//router.StaticFile("/counter", "./public/counter.html")
+	router.Static("/static", "./dist/")
+	router.StaticFile("/", "./dist/index.html")
 
 	port := os.Getenv("PORT")
 	if len(port) == 0 {
@@ -68,11 +66,6 @@ func main() {
 }
 
 func counter(c *gin.Context) {
-	_, ex := c.Get("cred")
-	if !ex {
-		c.Abort()
-		return
-	}
 	c.HTML(http.StatusOK, "counter.html", nil)
 }
 
