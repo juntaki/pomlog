@@ -1,51 +1,56 @@
 {
-    "name": "productivity_logger",
-    "version": "1.0.0",
-    "scripts": {
-        "start": "gulp",
-        "test": "echo \"Error: no test specified\" && exit 1",
-        "tutorial-test": "gulp main"
-    },
-    "eslintConfig": {
-        "extends": "airbnb",
-        "plugins": [
-            "import"
-        ],
-        "env": {
-            "browser": true
-        }
-    },
-    "babel": {
-        "presets": [
-            "latest",
-            "react"
-        ]
-    },
-    "dependencies": {
-        "babel-polyfill": "^6.16.0",
-        "d3": "3.5.17",
-        "material-ui": "^0.17.0",
-        "rd3": "^0.7.4",
-        "react": "^15.3.2",
-        "react-dom": "^15.3.2",
-        "react-redux": "^4.4.5",
-        "redux": "^3.6.0"
-    },
-    "devDependencies": {
-        "babel-loader": "^6.2.5",
-        "babel-preset-latest": "^6.16.0",
-        "babel-preset-react": "^6.16.0",
-        "del": "^2.2.2",
-        "eslint": "^3.8.1",
-        "eslint-config-airbnb": "^12.0.0",
-        "eslint-plugin-import": "^2.0.1",
-        "eslint-plugin-jsx-a11y": "^2.2.3",
-        "eslint-plugin-react": "^6.4.1",
-        "gulp": "^3.9.1",
-        "gulp-babel": "^6.1.2",
-        "gulp-eslint": "^3.0.1",
-        "webpack-stream": "^3.2.0"
-    },
-    "author": "juntaki",
-    "license": "MIT"
+  "name": "productivity_logger",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "gulp",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "tutorial-test": "gulp main"
+  },
+  "eslintConfig": {
+    "parser": "babel-eslint",
+    "extends": "airbnb",
+    "plugins": [
+      "import"
+    ],
+    "env": {
+      "browser": true
+    }
+  },
+  "babel": {
+    "presets": [
+      "latest",
+      "stage-2",
+      "react"
+    ]
+  },
+  "dependencies": {
+    "babel-polyfill": "^6.16.0",
+    "d3": "3.5.17",
+    "material-ui": "^0.17.0",
+    "rd3": "^0.7.4",
+    "react": "^15.3.2",
+    "react-dom": "^15.3.2",
+    "react-redux": "^4.4.5",
+    "react-tap-event-plugin": "^2.0.1",
+    "redux": "^3.6.0"
+  },
+  "devDependencies": {
+    "babel-eslint": "^7.1.1",
+    "babel-loader": "^6.2.5",
+    "babel-preset-latest": "^6.16.0",
+    "babel-preset-react": "^6.16.0",
+    "babel-preset-stage-2": "^6.22.0",
+    "del": "^2.2.2",
+    "eslint": "^3.8.1",
+    "eslint-config-airbnb": "^12.0.0",
+    "eslint-plugin-import": "^2.0.1",
+    "eslint-plugin-jsx-a11y": "^2.2.3",
+    "eslint-plugin-react": "^6.4.1",
+    "gulp": "^3.9.1",
+    "gulp-babel": "^6.1.2",
+    "gulp-eslint": "^3.0.1",
+    "webpack-stream": "^3.2.0"
+  },
+  "author": "juntaki",
+  "license": "MIT"
 }
